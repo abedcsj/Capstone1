@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+</head>
+<body>
+<h1>Create page</h1>
+
+  <div>
+        아이디
+        <input type="number" id="create_board_id" />
+  </div>
+  <div>
+        제목
+        <input type="text" id="create_board_title" />
+
+  </div>
+  <div>
+        <td>내용</td>
+        <td><input type="text" id="create_board_content" /></td>
+  </div>
+  <div>
+        <td>작성자</td>
+        <td><input type="text" id="create_board_author" /></td>
+  </div>
+
+
+
+<button onclick="create_board()">
+    만들기
+</button>
+<button onclick="update_html()">
+    업데이트
+</button>
+
+
+<script>
+  /*  function update_html(){
+        let create_board_title = $("#create_board_title").val();
+        $("#div_id").html(create_board_title);
+    }
+*/
+  //?????
+    function create_board(){
+        $.ajax({
+            url: "/api/board/create",
+            type: "POST",
+            contentType : 'application/json; charset=utf-8',
+            data: {
+                id : $("#create_board_id").val()
+                , title : $("#create_board_title").val()
+                ,content : $("#create_board_content").val()
+                ,author : $("#create_board_author").val()
+            },
+            cache: false,
+            success: (obj_data, status, xhr)=>{
+                alert(JSON.stringify(obj_data));
+            },
+            error: (obj_data, status, xhr)=>{
+                alert("error!!");
+                alert(JSON.stringify(obj_data));
+            }
+        });
+    }
+
+</script>
+
+
+</body>
+</html>
