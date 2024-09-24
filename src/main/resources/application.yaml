@@ -8,7 +8,7 @@ logging:
     org.springframework.web.servlet: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
 server:
-  port: 8080
+  port: 8081
 
 spring:
   datasource:
