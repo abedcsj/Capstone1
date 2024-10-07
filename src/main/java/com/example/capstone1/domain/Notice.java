@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -13,7 +12,7 @@ public class Notice {
     @Id
     private Long id;
 
-    @Column(nullable = false) @Setter
+    @Column(nullable = false)@Setter
     private String title;
     @Setter
     private String content;

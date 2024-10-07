@@ -1,6 +1,7 @@
 package com.example.capstone1.service.impl;
 
 import com.example.capstone1.domain.Notice;
+import com.example.capstone1.dto.NoticeDto;
 import com.example.capstone1.repository.NoticeRepository;
 import com.example.capstone1.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -17,32 +18,31 @@ public class NoticeServiceImpl implements NoticeService {
     private final NoticeRepository noticeRepository;
 
     @Override
-    public Map<String, Object> create(Map<String, Object> params) {
+    public NoticeDto.CreateResDto create(NoticeDto.CreateReqDto params) {
         System.out.println("create");
-        Map<String, Object> result = new HashMap<String, Object>();
-
         Notice notice = new Notice();
-        notice.setTitle(params.get("title").toString());
-        notice.setContent(params.get("content").toString());
+        notice.setTitle(params.getTitle());
+        notice.setContent(params.getContent());
         noticeRepository.save(notice);
-
-        result.put("success", true);
-        result.put("id", notice.getId());
-        return result;
+        NoticeDto.CreateResDto resDto = new NoticeDto.CreateResDto();
+        resDto.setId(notice.getId());
+        return resDto;
     }
+
     @Override
-    public Map<String, Object> update(Map<String, Object> params) {
+    public NoticeDto.UpdateResDto update(NoticeDto.UpdateReqDto params) {
         System.out.println("update");
-        Notice notice = noticeRepository.findById(Long.parseLong(params.get("id") + "")).orElseThrow(() -> new RuntimeException(""));
-        if(params.get("title") != null) {
-            notice.setTitle(params.get("title").toString());
+        Notice notice = noticeRepository.findById(params.getId()).orElse(null);
+        if(params.getTitle() != null) {
+            notice.setTitle(params.getTitle());
         }
-        if(params.get("content") != null) {
-            notice.setContent(params.get("content").toString());
+        if(params.getContent() != null) {
+            notice.setContent(params.getTitle());
         }
         noticeRepository.save(notice);
         return null;
     }
+
     @Override
     public List<Notice> list() {
         List<Notice> noticeList = noticeRepository.findAll();
